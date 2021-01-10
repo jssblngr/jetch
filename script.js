@@ -1,11 +1,15 @@
 let btn = document.getElementById("countbutton")
-btn.addEventListener("click", createGrid)
+let clearbtn = document.getElementById("clearbutton")
+btn.addEventListener("click", adjustGrid)
+clearbtn.addEventListener("click", clearGrid)
 
-function createGrid() {
+function defaultGrid() {
+    createGrid(50);
+    document.getElementById("countsize").value = 50;
+}
+
+function createGrid(rows) {
     var etchContainer = document.getElementById("etchcontainer");
-    etchContainer.innerHTML = '';
-
-    let rows = prompt("How many rows?");
     let x = rows * rows;
     document.documentElement.style.setProperty("--columns-row", rows);
     for (let i = 0; i < x; i++) {
@@ -13,7 +17,23 @@ function createGrid() {
         etchCell.classList.add("etchcell")
         etchContainer.appendChild(etchCell);
         etchCell.addEventListener("mouseenter", function () {
-            this.style.backgroundColor = "red";
+            this.style.backgroundColor = "black";
         })
     }
 }
+
+function adjustGrid() {
+    let rows = document.getElementById("countsize").value;
+    clearGrid();
+    createGrid(rows);
+}
+
+function clearGrid() {
+    let etchCell = document.getElementsByClassName("etchcell");
+    let etchCellLength = etchCell.length
+    for (let x = 0; x < etchCellLength; x++) {
+        etchCell[x].style.backgroundColor = "grey";
+    }
+}
+
+defaultGrid();
