@@ -2,9 +2,6 @@
     --columns-row: 2;
 }
 
-.maincontainer {
-}
-
 .etchcontainer {
     display: grid;
     grid-template-columns: repeat(var(--columns-row), 1fr);
@@ -39,18 +36,17 @@
     border-radius: 30px;
 }
 
-#countbutton {
+.controlbutton {
     margin-top: 20px;
     height: 40px;
     border-radius: 30px;
 }
 
-#clearbutton {
-    margin-top: 20px;
-    height: 40px;
-    border-radius: 30px;
-}
 
 .controls {
     padding-top: 300px;
+}
+
+.colortest {
+    background-color: rgb(123, 223, 232);
 }
