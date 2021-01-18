@@ -101,16 +101,15 @@ function rainbowBtn() {
 }
 
 function rgbPicker() {
-  console.log(rgbpicker.value);
-  let rows = document.getElementById("countsize").value;
-  clearGrid();
-  let etchCell = document.getElementsByClassName("etchcell");
-  for (let i = 0; i < rows * rows; i++) {
-      etchCell[i].style.opacity = "1";
-      etchCell[i].addEventListener('mouseover', function () {
-          etchCell[i].style.backgroundColor = rgbpicker.value;
-      })
-  }
+    let rows = document.getElementById("countsize").value;
+    clearGrid();
+    let etchCell = document.getElementsByClassName("etchcell");
+    for (let i = 0; i < rows * rows; i++) {
+        etchCell[i].style.opacity = "1";
+        etchCell[i].addEventListener('mouseover', function () {
+            etchCell[i].style.backgroundColor = rgbpicker.value;
+        })
+    }
 }
 
 defaultGrid();
