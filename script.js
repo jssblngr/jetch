@@ -1,16 +1,18 @@
-let adjustbtn = document.getElementById("countbutton")
-let clearbtn = document.getElementById("clearbutton")
-let blackbtn = document.getElementById("blackbtn")
-let greybtn = document.getElementById("greybtn")
-let rainbowbtn = document.getElementById("rainbowbtn")
+const adjustbtn = document.getElementById("countbutton")
+const clearbtn = document.getElementById("clearbutton")
+const blackbtn = document.getElementById("blackbtn")
+const greybtn = document.getElementById("greybtn")
+const rainbowbtn = document.getElementById("rainbowbtn")
+const erasebtn = document.getElementById("erasebtn")
+const rgbpicker = document.getElementById('rgbpicker');
 
 adjustbtn.addEventListener("click", adjustGrid)
 clearbtn.addEventListener("click", clearGrid)
 blackbtn.addEventListener("click", blackBtn)
 greybtn.addEventListener("click", greyBtn)
 rainbowbtn.addEventListener("click", rainbowBtn)
-
-let globalColor = ""
+erasebtn.addEventListener("click", eraseBtn)
+rgbpicker.addEventListener('change', rgbPicker)
 
 function defaultGrid() {
     document.getElementById("countsize").value = 50;
@@ -25,9 +27,6 @@ function createGrid(rows) {
         var etchCell = document.createElement("div");
         etchCell.classList.add("etchcell")
         etchContainer.appendChild(etchCell);
-        etchCell.addEventListener("mouseenter", function setColor() {
-                this.style.backgroundColor = `${globalColor}`;
-        })
     }
 }
 
@@ -43,41 +42,75 @@ function clearGrid() {
     let etchCellLength = etchCell.length
     for (let x = 0; x < etchCellLength; x++) {
         etchCell[x].style.backgroundColor = "grey";
+        newCell = etchCell[x].cloneNode(true);
+        etchCell[x].parentNode.replaceChild(newCell, etchCell[x]);
     }
 }
 
 function blackBtn() {
-    globalColor = "black";
-    console.log(`blackBtn globalColor is now set to: ${globalColor}`)
+    let rows = document.getElementById("countsize").value;
+    clearGrid();
+    let etchCell = document.getElementsByClassName("etchcell");
+    for (let i = 0; i < rows * rows; i++) {
+        etchCell[i].style.opacity = "1";
+        etchCell[i].addEventListener('mouseover', function () {
+            etchCell[i].style.backgroundColor = "black";
+        })
+    }
+}
+
+function eraseBtn() {
+    let rows = document.getElementById("countsize").value;
+    let etchCell = document.getElementsByClassName("etchcell");
+    for (let i = 0; i < rows * rows; i++) {
+        etchCell[i].addEventListener('mouseover', function () {
+            etchCell[i].style.backgroundColor = "grey";
+        })
+    }
 }
 
 function greyBtn() {
     let rows = document.getElementById("countsize").value;
+    clearGrid();
     let etchCell = document.getElementsByClassName("etchcell");
-    globalColor = "black"
-    console.log(`greyBtn globalColor is now set to: ${globalColor}`)
     for (let i = 0; i < rows * rows; i++) {
-        etchCell[i].addEventListener('mouseover', function greyFunc() {
-            if (!etchCell[i].style.opacity){
-                etchCell[i].style.opacity = "0.1";
-            }
-            let cellOpacity = parseFloat(etchCell[i].style.opacity);
-            etchCell[i].style.opacity = cellOpacity + 0.1;
-            console.log(`etchCell[i].style.opacity is ${etchCell[i].style.opacity}`)
-            console.log(`cellOpacity is ${cellOpacity}`)
-        })
+        etchCell[i].style.opacity = "0.1";
+        if (!etchCell[i].style.opacity) {
+        }
+        else {
+            etchCell[i].addEventListener('mouseover', function () {
+                let cellOpacity = parseFloat(etchCell[i].style.opacity);
+                etchCell[i].style.opacity = cellOpacity + 0.1;
+                etchCell[i].style.backgroundColor = "black";
+                
+            })
+        }
     }
 }
 
 function rainbowBtn() {
     let rows = document.getElementById("countsize").value;
+    clearGrid();
     let etchCell = document.getElementsByClassName("etchcell");
-    globalColor = "rainbow"
     for (let i = 0; i < rows * rows; i++) {
-        etchCell[i].addEventListener('mouseover', function rainbowFunc() {
+        etchCell[i].style.opacity = "1";
+        etchCell[i].addEventListener('mouseover', function () {
             etchCell[i].style.backgroundColor = `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`;
         })
     }
+}
+
+function rgbPicker() {
+  console.log(rgbpicker.value);
+  let rows = document.getElementById("countsize").value;
+  clearGrid();
+  let etchCell = document.getElementsByClassName("etchcell");
+  for (let i = 0; i < rows * rows; i++) {
+      etchCell[i].style.opacity = "1";
+      etchCell[i].addEventListener('mouseover', function () {
+          etchCell[i].style.backgroundColor = rgbpicker.value;
+      })
+  }
 }
 
 defaultGrid();
