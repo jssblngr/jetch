@@ -15,8 +15,8 @@ erasebtn.addEventListener("click", eraseBtn)
 rgbpicker.addEventListener('change', rgbPicker)
 
 function defaultGrid() {
-    document.getElementById("countsize").value = 50;
-    createGrid(50);
+    document.getElementById("countsize").value = 20;
+    createGrid(20);
 }
 
 function createGrid(rows) {
